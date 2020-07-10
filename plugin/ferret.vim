@@ -610,7 +610,7 @@ endif
 " Like |:Ack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
 
 ""
 " @command :Lack {pattern} {options}
@@ -626,7 +626,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call
 " Like |:Lack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
 
 ""
 " @command :Back {pattern} {options}
@@ -642,7 +642,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack ca
 " Like |:Back|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
 
 ""
 " @command :Black {pattern} {options}
@@ -658,7 +658,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back ca
 " Like |:Black|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
 
 ""
 " @command :Quack {pattern} {options}
@@ -730,8 +730,8 @@ command! FerretCancelAsync call ferret#private#async#cancel()
 "
 command! FerretPullAsync call ferret#private#async#pull()
 
-nnoremap <Plug>(FerretAck) :Ack<space>
-nnoremap <Plug>(FerretLack) :Lack<space>
+"nnoremap <Plug>(FerretAck) :Ack<space>
+"nnoremap <Plug>(FerretLack) :Lack<space>
 
 ""
 " @option g:FerretAckWordWord boolean 0
