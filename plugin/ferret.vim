@@ -610,7 +610,7 @@ endif
 " Like |:Ack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
 
 ""
 " @command :Lack {pattern} {options}
@@ -626,7 +626,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call
 " Like |:Lack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
 
 ""
 " @command :Back {pattern} {options}
@@ -642,7 +642,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack ca
 " Like |:Back|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
 
 ""
 " @command :Black {pattern} {options}
@@ -658,7 +658,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back ca
 " Like |:Black|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
 
 ""
 " @command :Quack {pattern} {options}
@@ -702,7 +702,7 @@ command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack 
 " ```
 " :Acks /\v(foo\d+)(bar)/\2\1/
 " ```
-command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
+"command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
 
 ""
 " @command :Lacks /{pattern}/{replacement}/
@@ -712,14 +712,14 @@ command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
 " of the |:Acks| command, but operates on the |location-list| instead of the
 " |quickfix| listing.
 "
-command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
+"command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
 
 ""
 " @command :FerretCancelAsync
 "
 " Cancels any asynchronous search that may be in progress in the background.
 "
-command! FerretCancelAsync call ferret#private#async#cancel()
+"command! FerretCancelAsync call ferret#private#async#cancel()
 
 ""
 " @command :FerretPullAsync
@@ -728,10 +728,10 @@ command! FerretCancelAsync call ferret#private#async#cancel()
 " that may have been produced by a long-running asynchronous search in progress
 " in the background.
 "
-command! FerretPullAsync call ferret#private#async#pull()
+"command! FerretPullAsync call ferret#private#async#pull()
 
-nnoremap <Plug>(FerretAck) :Ack<space>
-nnoremap <Plug>(FerretLack) :Lack<space>
+"nnoremap <Plug>(FerretAck) :Ack<space>
+"nnoremap <Plug>(FerretLack) :Lack<space>
 
 ""
 " @option g:FerretAckWordWord boolean 0
@@ -841,7 +841,7 @@ endif
 "
 " It takes the files currently in the |quickfix| listing and sets them as
 " |:args| so that they can be operated on en masse via the |:argdo| command.
-command! -bar Qargs execute 'args' ferret#private#args('qf')
+"command! -bar Qargs execute 'args' ferret#private#args('qf')
 
 ""
 " @command :Largs
@@ -850,7 +850,7 @@ command! -bar Qargs execute 'args' ferret#private#args('qf')
 "
 " It takes the files in the current |location-list| and sets them as
 " |:args| so that they can be operated on en masse via the |:argdo| command.
-command! -bar Largs execute 'args' ferret#private#args('location')
+"command! -bar Largs execute 'args' ferret#private#args('location')
 
 ""
 " @option g:FerretQFCommands boolean 1

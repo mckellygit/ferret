@@ -462,7 +462,8 @@ function! ferret#private#acks(command, type) abort
     let l:substitute='%substitute'
   endif
 
-  execute l:command l:substitute . l:pattern . l:options . ' | update'
+  "execute l:command l:substitute . l:pattern . l:options . ' | update'
+  execute l:command l:substitute . l:pattern . l:options
 
   call ferret#private#autocmd('FerretDidWrite')
 endfunction
