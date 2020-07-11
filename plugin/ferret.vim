@@ -675,7 +675,7 @@ endif
 " Like |:Quack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
 
 ""
 " @command :Acks /{pattern}/{replacement}/
