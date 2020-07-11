@@ -26,11 +26,17 @@ function! s:delete(first, last)
 
   " Update listing and go to next entry.
   if l:type ==# 'qf'
-    call setqflist(l:list, 'r')
-    execute 'cc ' . a:first
+      try
+          call setqflist(l:list, 'r')
+          execute 'cc ' . a:first
+      catch /E42:/
+      endtry
   else
-    call setloclist(0, l:list, 'r')
-    execute 'll ' . a:first
+      try
+          call setloclist(0, l:list, 'r')
+          execute 'll ' . a:first
+      catch /E42:/
+      endtry
   endif
 
   " Move focus back to listing.
