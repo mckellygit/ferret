@@ -31,12 +31,12 @@
 " of Vim (version 8 or higher, or Neovim), searches are performed
 " asynchronously (without blocking the UI).
 "
-" Shortcut mappings are provided to start an |:Ack| search (<leader>a) or to
-" search for the word currently under the cursor (<leader>s).
+" Shortcut mappings are provided to start an |:Ack| search (`<Leader>a`) or to
+" search for the word currently under the cursor (`<Leader>s`).
 "
 " Results are normally displayed in the |quickfix| window, but Ferret also
 " provides a |:Lack| command that behaves like |:Ack| but uses the
-" |location-list| instead, and a <leader>l mapping as a shortcut to |:Lack|.
+" |location-list| instead, and a `<Leader>l` mapping as a shortcut to |:Lack|.
 "
 " |:Back| and |:Black| are analogous to |:Ack| and |:Lack|, but scoped to search
 " within currently open buffers only. |:Quack| is scoped to search among the
@@ -45,7 +45,7 @@
 " ## 2. Streamlined multi-file replace
 "
 " The companion to |:Ack| is |:Acks| (mnemonic: "Ack substitute", accessible via
-" shortcut <leader>r), which allows you to run a multi-file replace across all
+" shortcut `<Leader>r`), which allows you to run a multi-file replace across all
 " the files placed in the |quickfix| window by a previous invocation of |:Ack|
 " (or |:Back|, or |:Quack|).
 "
@@ -105,7 +105,7 @@
 "
 " ## Circumstances where mappings do not get set up
 "
-" Note that Ferret will not try to set up the <leader> mappings if any of the
+" Note that Ferret will not try to set up the |<Leader>| mappings if any of the
 " following are true:
 "
 " - A mapping with the same |{lhs}| already exists.
@@ -128,7 +128,7 @@
 "
 " # Custom autocommands
 "
-"                                                *FerretWillWrite* *FerretDidWrite*
+"      *FerretAsyncStart* *FerretAsyncFinish* *FerretWillWrite* *FerretDidWrite*
 " For maximum compatibility with other plug-ins, Ferret runs the following
 " "User" autocommands before and after running the file writing operations
 " during |:Acks| or |:Lacks|:
@@ -146,6 +146,11 @@
 " autocmd User FerretDidWrite call CustomDidWrite()
 " ```
 "
+" Additionally, Ferret runs these autocommands when an async search begins and
+" ends:
+"
+" - FerretAsyncStart
+" - FerretAsyncFinish
 "
 " # Overrides
 "
@@ -343,8 +348,8 @@
 " - Publish the code:
 "
 " ```
-" git push origin master --follow-tags
-" git push github master --follow-tags
+" git push origin main --follow-tags
+" git push github main --follow-tags
 " ```
 "
 " - Produce the release archive:
@@ -382,7 +387,12 @@
 "
 " # History
 "
-" ## master (not yet released)
+" ## main (not yet released)
+"
+" - Add |<Plug>(FerretBack)|, |<Plug>(FerretBlack)|, and |<Plug>(FerretQuack)|
+"   targets for use in mappings (https://github.com/wincent/ferret/issues/79).
+"
+" ## 5.1 (9 July 2021)
 "
 " - Add |g:FerretAckWordWord| setting, to pass `-w` to the underlying search
 "   tool when |<Plug>(FerretAckWord)| is pressed
@@ -392,6 +402,8 @@
 " - Append a trailing slash when autocompleting a directory name
 "   (https://github.com/wincent/ferret/issues/69).
 " - Fixed failure to detect pre-existing mapping to |<Plug>(FerretLack)|.
+" - Worked around breakage caused by `rg` v13.0.0
+"   (https://github.com/wincent/ferret/issues/78).
 "
 " ## 5.0 (8 June 2019)
 "
@@ -601,8 +613,8 @@ endif
 " :Ack -w something foo bar
 " ```
 "
-" As a convenience <leader>a is set-up (|<Plug>(FerretAck)|) as a shortcut to
-" enter |Cmdline-mode| with `:Ack` inserted on the |Cmdline|. Likewise <leader>s
+" As a convenience `<Leader>a` is set-up (|<Plug>(FerretAck)|) as a shortcut to
+" enter |Cmdline-mode| with `:Ack` inserted on the |Cmdline|. Likewise `<Leader>s`
 " (|<Plug>(FerretAckWord)|) is a shortcut for running |:Ack| with the word
 " currently under the cursor.
 "
@@ -611,7 +623,7 @@ endif
 " Like |:Ack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
+"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
 
 ""
 " @command :Lack {pattern} {options}
@@ -627,7 +639,7 @@ endif
 " Like |:Lack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
+"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
 
 ""
 " @command :Back {pattern} {options}
@@ -643,7 +655,7 @@ endif
 " Like |:Back|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
+"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
 
 ""
 " @command :Black {pattern} {options}
@@ -659,7 +671,7 @@ endif
 " Like |:Black|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
+"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
 
 ""
 " @command :Quack {pattern} {options}
@@ -676,7 +688,7 @@ endif
 " Like |:Quack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
+"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
 
 ""
 " @command :Acks /{pattern}/{replacement}/
@@ -703,7 +715,7 @@ endif
 " ```
 " :Acks /\v(foo\d+)(bar)/\2\1/
 " ```
-"command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
+command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
 
 ""
 " @command :Lacks /{pattern}/{replacement}/
@@ -713,14 +725,14 @@ endif
 " of the |:Acks| command, but operates on the |location-list| instead of the
 " |quickfix| listing.
 "
-"command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
+command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
 
 ""
 " @command :FerretCancelAsync
 "
 " Cancels any asynchronous search that may be in progress in the background.
 "
-"command! FerretCancelAsync call ferret#private#async#cancel()
+command! FerretCancelAsync call ferret#private#async#cancel()
 
 ""
 " @command :FerretPullAsync
@@ -729,10 +741,43 @@ endif
 " that may have been produced by a long-running asynchronous search in progress
 " in the background.
 "
-"command! FerretPullAsync call ferret#private#async#pull()
+command! FerretPullAsync call ferret#private#async#pull()
 
-"nnoremap <Plug>(FerretAck) :Ack<space>
-"nnoremap <Plug>(FerretLack) :Lack<space>
+nnoremap <Plug>(FerretAck) :Ack<space>
+nnoremap <Plug>(FerretLack) :Lack<space>
+
+""
+" @mapping <Plug>(FerretBack)
+"
+" Ferret provides |<Plug>(FerretBack)| which can be used to trigger the |:Back|
+" command. To configure a mapping for it, use |:nmap|:
+"
+" ```
+" nmap <Leader>fb <Plug>(FerretBack)
+" ```
+nnoremap <Plug>(FerretBack) :Back<space>
+
+""
+" @mapping <Plug>(FerretBlack)
+"
+" Ferret provides |<Plug>(FerretBlack)| which can be used to trigger the |:Black|
+" command. To configure a mapping for it, use |:nmap|:
+"
+" ```
+" nmap <Leader>fl <Plug>(FerretBlack)
+" ```
+nnoremap <Plug>(FerretBlack) :Black<space>
+
+""
+" @mapping <Plug>(FerretQuack)
+"
+" Ferret provides |<Plug>(FerretBack)| which can be used to trigger the |:Quack|
+" command. To configure a mapping for it, use |:nmap|:
+"
+" ```
+" nmap <Leader>fq <Plug>(FerretQuack)
+" ```
+nnoremap <Plug>(FerretQuack) :Quack<space>
 
 ""
 " @option g:FerretAckWordWord boolean 0
@@ -770,66 +815,66 @@ nnoremap <Plug>(FerretAcks) :Acks <c-r>=(ferret#private#acks_prompt())<CR><Left>
 " ```
 let s:map=get(g:, 'FerretMap', 1)
 if s:map
-  if !hasmapto('<Plug>(FerretAck)') && maparg('<leader>a', 'n') ==# ''
+  if !hasmapto('<Plug>(FerretAck)') && maparg('<Leader>a', 'n') ==# ''
     ""
     " @mapping <Plug>(FerretAck)
     "
-    " Ferret maps <leader>a to |<Plug>(FerretAck)|, which triggers the |:Ack|
+    " Ferret maps `<Leader>a` to |<Plug>(FerretAck)|, which triggers the |:Ack|
     " command. To use an alternative mapping instead, create a different one in
     " your |.vimrc| instead using |:nmap|:
     "
     " ```
-    " " Instead of <leader>a, use <leader>x.
-    " nmap <leader>x <Plug>(FerretAck)
+    " " Instead of <Leader>a, use <Leader>x.
+    " nmap <Leader>x <Plug>(FerretAck)
     " ```
-    nmap <unique> <leader>a <Plug>(FerretAck)
+    nmap <unique> <Leader>a <Plug>(FerretAck)
   endif
 
-  if !hasmapto('<Plug>(FerretLack)') && maparg('<leader>l', 'n') ==# ''
+  if !hasmapto('<Plug>(FerretLack)') && maparg('<Leader>l', 'n') ==# ''
     ""
     " @mapping <Plug>(FerretLack)
     "
-    " Ferret maps <leader>l to |<Plug>(FerretLack)|, which triggers the |:Lack|
+    " Ferret maps `<Leader>l` to |<Plug>(FerretLack)|, which triggers the |:Lack|
     " command. To use an alternative mapping instead, create a different one in
     " your |.vimrc| instead using |:nmap|:
     "
     " ```
-    " " Instead of <leader>l, use <leader>y.
-    " nmap <leader>y <Plug>(FerretLack)
+    " " Instead of <Leader>l, use <Leader>y.
+    " nmap <Leader>y <Plug>(FerretLack)
     " ```
-    nmap <unique> <leader>l <Plug>(FerretLack)
+    nmap <unique> <Leader>l <Plug>(FerretLack)
   endif
 
-  if !hasmapto('<Plug>(FerretAckWord)') && maparg('<leader>s', 'n') ==# ''
+  if !hasmapto('<Plug>(FerretAckWord)') && maparg('<Leader>s', 'n') ==# ''
     ""
     " @mapping <Plug>(FerretAckWord)
     "
-    " Ferret maps <leader>s (mnemonic: "selection) to |<Plug>(FerretAckWord)|,
+    " Ferret maps `<Leader>s` (mnemonic: "selection) to |<Plug>(FerretAckWord)|,
     " which uses |:Ack| to search for the word currently under the cursor. To
     " use an alternative mapping instead, create a different one in your
     " |.vimrc| instead using |:nmap|:
     "
     " ```
-    " " Instead of <leader>s, use <leader>z.
-    " nmap <leader>z <Plug>(FerretAckWord)
+    " " Instead of <Leader>s, use <Leader>z.
+    " nmap <Leader>z <Plug>(FerretAckWord)
     " ```
-    nmap <unique> <leader>s <Plug>(FerretAckWord)
+    nmap <unique> <Leader>s <Plug>(FerretAckWord)
   endif
 
-  if !hasmapto('<Plug>(FerretAcks)') && maparg('<leader>r', 'n') ==# ''
+  if !hasmapto('<Plug>(FerretAcks)') && maparg('<Leader>r', 'n') ==# ''
     ""
     " @mapping <Plug>(FerretAcks)
     "
-    " Ferret maps <leader>r (mnemonic: "replace") to |<Plug>(FerretAcks)|, which
+    " Ferret maps `<Leader>r` (mnemonic: "replace") to |<Plug>(FerretAcks)|, which
     " triggers the |:Acks| command and fills the prompt with the last search
     " term from Ferret. to use an alternative mapping instead, create a
     " different one in your |.vimrc| instead using |:nmap|:
     "
     " ```
-    " " Instead of <leader>r, use <leader>u.
-    " nmap <leader>u <Plug>(FerretAcks)
+    " " Instead of <Leader>r, use <Leader>u.
+    " nmap <Leader>u <Plug>(FerretAcks)
     " ```
-    nmap <unique> <leader>r <Plug>(FerretAcks)
+    nmap <unique> <Leader>r <Plug>(FerretAcks)
   endif
 endif
 
@@ -842,7 +887,7 @@ endif
 "
 " It takes the files currently in the |quickfix| listing and sets them as
 " |:args| so that they can be operated on en masse via the |:argdo| command.
-"command! -bar Qargs execute 'args' ferret#private#args('qf')
+command! -bar Qargs execute 'args' ferret#private#args('qf')
 
 ""
 " @command :Largs
@@ -851,7 +896,7 @@ endif
 "
 " It takes the files in the current |location-list| and sets them as
 " |:args| so that they can be operated on en masse via the |:argdo| command.
-"command! -bar Largs execute 'args' ferret#private#args('location')
+command! -bar Largs execute 'args' ferret#private#args('location')
 
 ""
 " @option g:FerretQFCommands boolean 1

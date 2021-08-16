@@ -26,12 +26,14 @@ function! s:delete(first, last)
 
   " Update listing and go to next entry.
   if l:type ==# 'qf'
+      "mck - add try/catch /E42:/
       try
           call setqflist(l:list, 'r')
           execute 'cc ' . a:first
       catch /E42:/
       endtry
   else
+      "mck - add try/catch /E42:/
       try
           call setloclist(0, l:list, 'r')
           execute 'll ' . a:first
@@ -468,7 +470,7 @@ function! ferret#private#acks(command, type) abort
     let l:substitute='%substitute'
   endif
 
-  "execute l:command l:substitute . l:pattern . l:options . ' | update'
+  "mck - execute l:command l:substitute . l:pattern . l:options . ' | update'
   execute l:command l:substitute . l:pattern . l:options
 
   call ferret#private#autocmd('FerretDidWrite')
@@ -477,7 +479,7 @@ endfunction
 ""
 " @option g:FerretVeryMagic boolean 1
 "
-" Controls whether the |<Plug>(FerretAck)| mapping should populate the command
+" Controls whether the |<Plug>(FerretAcks)| mapping should populate the command
 " line with the |/\v| "very magic" marker. Given that the argument passed to
 " |:Acks| is handed straight to Vim, using "very magic" makes it more likely
 " that the (probably Perl-compatible) regular expression used in the initial
