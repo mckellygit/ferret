@@ -391,6 +391,10 @@
 "
 " - Add |<Plug>(FerretBack)|, |<Plug>(FerretBlack)|, and |<Plug>(FerretQuack)|
 "   targets for use in mappings (https://github.com/wincent/ferret/issues/79).
+" - Fix hangs produced by options that take arguments in `rg` v13.0.0
+"   (https://github.com/wincent/ferret/issues/82).
+" - Fix |E42| and |E684| errors when deleting last item in listing, or trying to
+"   delete from an empty listing (https://github.com/wincent/ferret/issues/83).
 "
 " ## 5.1 (9 July 2021)
 "
@@ -623,7 +627,7 @@ endif
 " Like |:Ack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#ackcomplete Ack call ferret#private#ack(<bang>0, <q-args>)
 
 ""
 " @command :Lack {pattern} {options}
@@ -639,7 +643,7 @@ endif
 " Like |:Lack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#lackcomplete Lack call ferret#private#lack(<bang>0, <q-args>)
 
 ""
 " @command :Back {pattern} {options}
@@ -655,7 +659,7 @@ endif
 " Like |:Back|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#backcomplete Back call ferret#private#back(<bang>0, <q-args>)
 
 ""
 " @command :Black {pattern} {options}
@@ -671,7 +675,7 @@ endif
 " Like |:Black|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#blackcomplete Black call ferret#private#black(<bang>0, <q-args>)
 
 ""
 " @command :Quack {pattern} {options}
@@ -688,7 +692,7 @@ endif
 " Like |:Quack|, but returns all results irrespective of the value of
 " |g:FerretMaxResults|.
 "
-"mck - command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
+"command! -bang -nargs=1 -complete=customlist,ferret#private#quackcomplete Quack call ferret#private#quack(<bang>0, <q-args>)
 
 ""
 " @command :Acks /{pattern}/{replacement}/
@@ -715,7 +719,7 @@ endif
 " ```
 " :Acks /\v(foo\d+)(bar)/\2\1/
 " ```
-command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
+"command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
 
 ""
 " @command :Lacks /{pattern}/{replacement}/
@@ -725,14 +729,14 @@ command! -nargs=1 Acks call ferret#private#acks(<q-args>, 'qf')
 " of the |:Acks| command, but operates on the |location-list| instead of the
 " |quickfix| listing.
 "
-command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
+"command! -nargs=1 Lacks call ferret#private#acks(<q-args>, 'location')
 
 ""
 " @command :FerretCancelAsync
 "
 " Cancels any asynchronous search that may be in progress in the background.
 "
-command! FerretCancelAsync call ferret#private#async#cancel()
+"command! FerretCancelAsync call ferret#private#async#cancel()
 
 ""
 " @command :FerretPullAsync
@@ -741,10 +745,10 @@ command! FerretCancelAsync call ferret#private#async#cancel()
 " that may have been produced by a long-running asynchronous search in progress
 " in the background.
 "
-command! FerretPullAsync call ferret#private#async#pull()
+"command! FerretPullAsync call ferret#private#async#pull()
 
-nnoremap <Plug>(FerretAck) :Ack<space>
-nnoremap <Plug>(FerretLack) :Lack<space>
+"nnoremap <Plug>(FerretAck) :Ack<space>
+"nnoremap <Plug>(FerretLack) :Lack<space>
 
 ""
 " @mapping <Plug>(FerretBack)
@@ -755,7 +759,7 @@ nnoremap <Plug>(FerretLack) :Lack<space>
 " ```
 " nmap <Leader>fb <Plug>(FerretBack)
 " ```
-nnoremap <Plug>(FerretBack) :Back<space>
+"nnoremap <Plug>(FerretBack) :Back<space>
 
 ""
 " @mapping <Plug>(FerretBlack)
@@ -766,7 +770,7 @@ nnoremap <Plug>(FerretBack) :Back<space>
 " ```
 " nmap <Leader>fl <Plug>(FerretBlack)
 " ```
-nnoremap <Plug>(FerretBlack) :Black<space>
+"nnoremap <Plug>(FerretBlack) :Black<space>
 
 ""
 " @mapping <Plug>(FerretQuack)
@@ -777,7 +781,7 @@ nnoremap <Plug>(FerretBlack) :Black<space>
 " ```
 " nmap <Leader>fq <Plug>(FerretQuack)
 " ```
-nnoremap <Plug>(FerretQuack) :Quack<space>
+"nnoremap <Plug>(FerretQuack) :Quack<space>
 
 ""
 " @option g:FerretAckWordWord boolean 0
